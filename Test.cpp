@@ -51,7 +51,13 @@ TEST_CASE("bad input")
     CHECK_THROWS(n.write(1,-1,7,Direction::Vertical,"world"));  
 
     CHECK_THROWS(n.write(-1,7,1,Direction::Horizontal,"hello"));  
-    CHECK_THROWS(n.write(-1,7,1,Direction::Vertical,"world"));  
+    CHECK_THROWS(n.write(-1,7,1,Direction::Vertical,"world")); 
+
+    CHECK_THROWS(n.read(1,-1,7,Direction::Horizontal,1));  
+    CHECK_THROWS(n.read(1,-1,7,Direction::Vertical,1));  
+
+    CHECK_THROWS(n.erase(-1,7,1,Direction::Horizontal,2));  
+    CHECK_THROWS(n.erase(1,-7,1,Direction::Vertical,2)); 
 
 	string text;
 	for(int i = 0 ; i <= 100; i++){
@@ -59,7 +65,29 @@ TEST_CASE("bad input")
     }
     CHECK_THROWS(n.write(0,0,0,Direction:: Horizontal,text));
 
+    CHECK_THROWS(n.read(0, 1, 95, Direction::Horizontal, -3));
+    CHECK_THROWS(n.erase(0, 0, 0, Direction::Vertical, -1));
+
+    CHECK_THROWS(n.show(-7));
+
 }
+
+
+TEST_CASE ("invalid char") 
+{
+    Notebook n;
+
+
+    CHECK_THROWS(n.write(0, 0, 0, Direction::Horizontal, "\n"));
+    CHECK_THROWS(n.write(0, 0, 0, Direction::Vertical, "\n"));
+
+
+    CHECK_THROWS(n.write(0, 0, 0, Direction::Horizontal, "_"));
+    CHECK_THROWS(n.write(0, 0, 0, Direction::Vertical, "_"));
+}
+
+
+
 
 TEST_CASE("rewriting"){
   
